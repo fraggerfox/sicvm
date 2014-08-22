@@ -1,0 +1,23 @@
+SICvm v0.0.1
+
+Will give a more detailed help file soon. 
+
+But for a quick quide
+
+for windows
+
+make win32 - to compile for windows
+make clean_win32 - to clean the binaries
+
+for linux
+
+make linux - to compile for linux
+make clean_linux - to clean the binaries
+
+Remember for windows you need MingW32 to compile the source
+
+For futher details on using SICvm refer to MANUAL
+
+NOTE: dos2unix and unix2dos might be required to run on files to
+      convert certain text files to proper mode, if not done can cause
+      problems in assembler / vm.

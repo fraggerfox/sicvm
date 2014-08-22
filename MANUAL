@@ -1,0 +1,83 @@
+SICvm v0.0.1 
+************
+
+---------------- Working of SICvm ----------------
+
+After compile run "sicvm.exe" (in windows) or "sicvm" (linux)
+
+The Machine works just like the hypothetical with little or no
+changes.  Currently the machine runs on a time slice fashion where
+each step in the working of the SIC machine has to be initiated by the
+user who is using the machine. The first command to be entered is "i",
+to initialize / turn on the machine.
+
+On turning "ON" the machine the Memory locations are initialized to
+0xFFH and Registers A, X, L are initialized to 0xFFFFFFH. PC is
+initialized to 0x000000H and SW is initialized to 0x800000. In the
+current implementation we use only the Condition Code and Running mode
+values of SW. This is done to verify the integrity of memrory, it's
+the equivalent of a POST in modern computers.
+
+The next step is to load the bootstrap loader from the input device
+"DEV00" (ROM). The bootstrap is loaded into SIC's memory after the
+initializing procedure where in the the memory and the Registers of
+SIC are initialized.  This is done with the help of the user after
+entering the command "r".  The Bootstrap occupies from 0x00000 to
+0x00080.
+
+The bootstrap code is also loaded into the SIC memory with the help of
+the host OS using standard C functions. This is included in the
+"bootstrap.c" file.
+
+Once Bootstrap is loaded control is handed over to the SIC in order to
+carry out its functions. From here on all the activities are carried
+out by SICvm.
+
+The next step is the Bootstrap itself. The Bootstrapper loads the
+absolute loader from DEVF2 and places it in the memory starting from
+0x00080 to 0x00300. After this is done the bootstrap program is no
+longer required in SIC. This is done when the user enters the command
+"b".
+
+The next step is to load the minimal shell for SIC using the loader we
+just loaded. The shell acts as a communication interface between the
+SIC machine and the user. This is done by using the "l" command.
+
+Execution of the Shell has to be done by entering the "e" command.
+
+The shell accepts 3 basic commands, it is indicated by a $
+
+l <dev> - load contents of <dev> into SIC mem eg: l F3 to load
+	  contents of DEVF3
+e - Execute the Loaded code
+q - Quit the Program
+
+------------- The Assembler -------------
+
+After compile run "sicasm.exe" (in windows) or "sicasm" (in linux)
+
+The VM by itself is pretty useless if it doesn't have any programs to
+run.  Two possible solutions to this problem are:
+a. Handcode SIC programs and assemble them manually
+b. Write assembly program and assemble them with a SIC assembler
+
+As a solution we provide a 2 Pass Assembler for SIC. The assembler
+that can assemble separately codes that are meant for "Bootstraping"
+or "Loader" or "Standard Program".
+
+The proper syntax is sicasm [OPTIONS]... <filename.sic>
+Some Helpful Options include
+  Use -l to assemble Absolute Loader for SIC.
+  Use -b to assemble the Boostrap Loader for SIC.
+
+The assembler is a standard 2 pass assembler based on Beck's 2 Pass
+Assembler Algorithm (ref page 53-54, System Software). Almost all of
+the features of the basic assembler described by Beck is implemented.
+
+After assembly of normal programs, place them in a device like DEVF3
+or DEVF4 etc before running SICvm. You can just copy the contents of
+the Object file after assembling into these Devices.
+
+The ./utils directory contains some sample programs that can be run in
+SICvm, A script for assembling and loading some of the these programs
+are present in this folder also.
