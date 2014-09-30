@@ -23,11 +23,11 @@
 
 //Detect the environement in which the compiler is used
 //to set system command for clearing the screen
-#ifdef __USE_POSIX
+#if defined (__unix__) || defined (__APPLE__)
 #define CLEARCMD "clear"
 #endif
 
-#ifndef __USE_POSIX
+#if defined (__WINNT__) || defined (__WIN32__)
 #define CLEARCMD "cls"
 #endif
 

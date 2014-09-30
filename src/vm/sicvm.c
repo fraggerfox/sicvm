@@ -66,9 +66,9 @@ char strCommand[MAXLENGTH];
 int main (/*int argv, char *argc[]*/) 
 {
     CLEARSCR(CLEARCMD);
-    printf ("SICvm v0.0.1");
+    printf ("SICvm v1.2.0 beta");
     printf ("\nType h for Help\n");
-    printf ("Report Bugs to (santhosh.raju@gmail.com).\n\n");
+    printf ("Report Bugs to (fragger_fox@users.sourceforge.net).\n\n");
 
     while (strCommand[0] != 'q') {
 	printf ("ss>");
@@ -127,7 +127,7 @@ int main (/*int argv, char *argc[]*/)
 	case 'e':
 	    PC = SHELL_ADDRESS;
 	    SW = SW | SU_MODE;
-	    CLEARSCR(CLEARCMD);
+
 	    if (run (SHELL) == NO_INTERRUPT) {
 		printf ("Shell Execution Completed Successful\n");
 	    }
@@ -146,9 +146,9 @@ int main (/*int argv, char *argc[]*/)
 
 	case 'c':
 	    CLEARSCR(CLEARCMD);
-	    printf ("SICvm v0.0.1");
+	    printf ("SICvm v1.2.0 beta");
 	    printf ("\nType h for Help\n");
-	    printf ("Report Bugs to (santhosh.raju@gmail.com).\n\n");
+	    printf ("Report Bugs to (fragger_fox@users.sourceforge.net).\n\n");
 	    break;
 
 	case 'h':
